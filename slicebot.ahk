@@ -23,7 +23,8 @@ Tier5         = tier5.png
 
 HaveLoot = false
 Done     = false
-MaxTier  = 3
+MaxTier  = 4
+Strikes  = 0
 
 F1::    ; Press F1 to activate the script
 Done = false
@@ -44,10 +45,11 @@ Loop
 
 F2::    ; Press F2 to stop the madness
 Done = true
+return
 
 Slice()
 {
-  global BaseDir, SlicePng, LockboxTextPng
+  global BaseDir, SlicePng
   Send {n}
   Sleep 1000
   ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *90 *TransBlack %BaseDir%%SlicePng%
@@ -55,21 +57,79 @@ Slice()
   {
     SendEvent {click %FoundX%, %FoundY%}
     Sleep 1000
-    ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *80 *TransBlack %BaseDir%%LockboxTextPng%
-    if ErrorLevel = 0 ; Found a quest that gives lockboxes
-    {
-      SendEvent {click %FoundX%, %FoundY%, 2}
-    }
-    else {
-      ChangeTier()
-    }
+    ClickLockboxText()
   }
   Accept()
   Send {Esc}
 }
 
+ClickLockboxText()
+{
+  global BaseDir, LockboxTextPng, Strikes
+  ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *80 *TransBlack %BaseDir%%LockboxTextPng%
+  if ErrorLevel = 0 ; Found a quest that gives lockboxes
+  {
+    SendEvent {click %FoundX%, %FoundY%, 2}
+  }
+  else {
+    ChangeTier()
+    if %Strikes% < 3
+      ClickLockboxText()  ; TODO: Fix recursion?  Does it matter?
+    else
+      Strikes := 0
+  }
+}
+
 ChangeTier()
 {
+  global BaseDir, DropdownIcon, MaxTier, Strikes
+  Strikes = %Strikes% + 1
+  ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *50 *TransBlack %BaseDir%%DropdownIcon%
+  if ErrorLevel = 0 ; Found a quest that gives lockboxes
+  {
+    SendEvent {click %FoundX%, %FoundY%}
+    LevelDown := MaxTier-1
+    sleep 500
+    SetTier%LevelDown%()
+  }
+}
+
+SetTier3()
+{
+  global BaseDir, Tier3
+  ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *100 *TransBlack %BaseDir%%Tier3%
+  if ErrorLevel = 0 ; Found a quest that gives lockboxes
+  {
+    SendEvent {click %FoundX%, %FoundY%}
+  }
+  else
+  {
+    SetTier2()
+  }
+}
+
+SetTier2()
+{
+  global BaseDir, Tier2
+  ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *100 *TransBlack %BaseDir%%Tier2%
+  if ErrorLevel = 0 ; Found a quest that gives lockboxes
+  {
+    SendEvent {click %FoundX%, %FoundY%}
+  }
+  else
+  {
+    SetTier1()
+  }
+}
+
+SetTier1()
+{
+  global BaseDir, Tier2
+  ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *100 *TransBlack %BaseDir%%Tier1%
+  if ErrorLevel = 0 ; Found a quest that gives lockboxes
+  {
+    SendEvent {click %FoundX%, %FoundY%}
+  }
 }
 
 Accept()
