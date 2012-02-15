@@ -26,6 +26,7 @@ Done     = false
 MaxTier  = 3
 
 F1::    ; Press F1 to activate the script
+Done = false
 Loop
 {
   Slice()
