@@ -87,7 +87,7 @@ ClickLockboxText()
   }
   else {
     ChangeTier()
-    if %Strikes% < 3
+    if Strikes < 3
       ClickLockboxText()  ; TODO: Fix recursion?  Does it matter?
     else
       Strikes := 0
@@ -97,7 +97,7 @@ ClickLockboxText()
 ChangeTier()
 {
   global BaseDir, DropdownIcon, MaxTier, Strikes
-  Strikes = %Strikes% + 1
+  Strikes := Strikes+1
   ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *50 *TransBlack %BaseDir%%DropdownIcon%
   if ErrorLevel = 0 ; Found a quest that gives lockboxes
   {
