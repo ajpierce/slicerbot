@@ -15,6 +15,7 @@ LockboxPng    = lockbox_black.png
 LockboxTextPng = lockboxes_black.png
 SlicePng      = slice.png
 DropdownIcon  = dropdown.png
+PendingText   = pending.png
 Tier1         = tier1.png
 Tier2         = tier2.png
 Tier3         = tier3.png
@@ -36,6 +37,7 @@ Loop
   {
     Shuffle(200,200)
   }
+  OpenLockbox()   ; Open any lockboxes we have lying around
   if Done = true
   {
     MsgBox All done!
@@ -60,7 +62,19 @@ Slice()
     ClickLockboxText()
   }
   Accept()
+  CheckPending()
   Send {Esc}
+}
+
+CheckPending()
+{
+  global BaseDir, PendingText
+  ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *90 *TransBlack %BaseDir%%PendingText%
+  if ErrorLevel = 0 ; Found a quest that gives lockboxes
+  {
+    SendEvent {click %FoundX%, %FoundY%, 2}
+    Accept()
+  }
 }
 
 ClickLockboxText()
