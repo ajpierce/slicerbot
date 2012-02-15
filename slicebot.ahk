@@ -73,6 +73,7 @@ CheckPending()
   if ErrorLevel = 0 ; Found a quest that gives lockboxes
   {
     SendEvent {click %FoundX%, %FoundY%, 2}
+    sleep 500
     Accept()
   }
 }
