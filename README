@@ -1,14 +1,20 @@
-slicerbot is an AutoHotKey Script to automate credit / resource generation in SW:TOR.
+slicerbot is an AutoHotKey Script to automate credit / skill point generation in SW:TOR. It will keep your companions out slicing while you're AFK, and automatically open the credit boxes they bring back for you!
 
-slicerbot operates by using image searches to identify key components to click on, such as the slicing icon, the accept button, credit boxes, pending missions, etc.  
+slicerbot operates by using image recognition to identify key components to click on, such as the slicing icon, the accept button, credit boxes, pending missions, etc.  
 
-The use of image searching should (hopefully) make slicerbot resolution-agnostic. Unfortuantely, because I've only tested at one resolution, it's possible that we'll need to implement some kind of scaling logic in our image searches, because our images were taken at 1920x1080.
+The use of image recognition should (hopefully) make slicerbot resolution-agnostic. Unfortuantely, because I've only tested at one resolution, it's possible that you'll need to implement some kind of scaling logic in your image searches, because the base images used for image recognition were taken at 1920x1080.
+
+== DISCLAIMER ==
+
+The use of slicerbot for extended periods of time, ESPECIALLY if your character has a high level of slicing, will get your SUSPENDED from the game!  slicerbot produces keystrokes which in turn produce very repetetive patterns of movement which can be detected by the fine folks at EA/Bioware.  The a good time to use slicerbot is when your character has a slicing skill of < 200 and you have multiple companions to send out.  The best time to use slierbot is when you're not AFK at all, so you can introduce more randomness into your character's behavior.
+
+I got suspended for 10 days from SW:TOR when I left slicerbot on for 8 hours straight sending 2 companions out on 30 minute missions.  In 2 days, however, my slicing skill went from 70 to 300, and I wasn't even in front of my computer.  USE AT YOUR OWN RISK!
 
 == USING SLICERBOT ==
 
-1. Move the contents of the repository to a directory of chosing.
+1. Move the contents of the repository to a directory of your chosing.
 2. Open slicebot.ahk and change the BaseDir directory to the directory you created in step 1.  Slicerbot needs to know where to find the image resources for image searching.
-3. Set the value of MaxTier.  Slicerbot needs to know which level to "level down" to if it fails to find any high-level lockbox quests.
+3. Set the value of MaxTier.  Slicerbot needs to know which level to "level down" to if it fails to find any high-level lockbox quests. (Currently only have the resources for the first 3 tiers)
 4. Load the script into AutoHotkey
 5. Log into SWTOR
 6. Clear your screen of all the windows.
@@ -18,19 +24,22 @@ The use of image searching should (hopefully) make slicerbot resolution-agnostic
 == Troubleshooting ==
 
 Q: My guy never clicks on anything!
-A: You might be able to tweak the image search sensitivity so Slicerbot recognizes things.  
+A: You might be able to tweak the image search sensitivity so Slicerbot recognizes things.
 
-In the script, anywhere it does an ImageSearch, find the *n before *TransBlack.  To increase tolerance, increase the value of n.  It has a maximum value of 255.  Note that if you do this, you risk having the script click on random icons.
+In the script, anywhere it does an ImageSearch, find the *n before *TransBlack.  To increase tolerance, increase the value of n.  It has a maximum value of 255.  Note that if you do this, you risk having the script click on undesired-but-similar-looking icons.
 
 Q: This is so cool!  I am a millionaire now!  How do I give back to the creator?
-A: Send many bitcoins to 1AhGPuzEE4pRWQpsdGrTtSGqc881td4T1Q
+A: Send bitcoins to 1AhGPuzEE4pRWQpsdGrTtSGqc881td4T1Q
+
+Q: This is so lame!  I got suspended from the game!
+A: Me too dude; did you read the disclaimer?  :)
 
 Q: Hey do u make it do anyting else like dipolemacy or arceology?
-A: Send many bitcoins to 1AhGPuzEE4pRWQpsdGrTtSGqc881td4T1Q
+A: Nope, but the code is right here if you want to fork it and tweak it. Just grab the icons you want the software to click and add them as image resources.
 
 Q: I don't have enough credits to send my guy out on a mission and it's looping indefinitely!
 A: Make sure you have enough credits before starting slicerbot.  Be friendly to your companions as I am not responsible for their slicing ineptitude and squandering of your money.
 
-Seriously though, by using slicerbot you will level up if you haven't already.  When your companions unlock new slicing tiers, there is a good chance that they will be failing frequently on expensive missions.  I have added tiers so that if it doesn't find a lockbox quest on your current level it will drop down a level and look for lockbox quests there, but it won't do that if there are high-level lockbox quests to be had, and there is a good chance that you will fail these.
+Seriously though, by using slicerbot you will skill up quite automatically.  When your companions unlock new slicing tiers, there is a good chance that they will be failing frequently on expensive missions.  I have added tiers so that if it doesn't find a lockbox quest on your current level it will drop down a level and look for lockbox quests there, but it won't do that if there are high-level lockbox quests to be had, and there is a good chance that you will fail these.
 
-Ok disclaimer is over.  You will be a millionaire.
+Ok README is over.  You will be a millionaire.  Or you will be suspended.  Or both!
